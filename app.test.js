@@ -1,11 +1,7 @@
 const request = require('supertest');
-const express = require('express');
-const path = require('path');
+const app = require('../server'); // импортируем реальное приложение
 
-const app = express();
-app.use(express.static(path.join(__dirname, '../public')));
-
-test('GET / должен вернуть страницу', async () => {
+test('GET / должен вернуть 200', async () => {
   const res = await request(app).get('/');
   expect(res.statusCode).toBe(200);
 });
