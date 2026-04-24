@@ -9,3 +9,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
 });
+module.exports = app;
