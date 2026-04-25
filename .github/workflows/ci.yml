@@ -37,7 +37,7 @@ jobs:
     - name: Deploy to Server
       run: |
           sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -p 2221 -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{secrets.SERVER_HOST}} << EOF
-            cd var/lab1
+            cd var/lab1/AIS1
             git config --global credential.helper store
             echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" > ~/.git-credentials
             git pull origin main
