@@ -1,18 +1,20 @@
-name: CI
-
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  test:
+deploy:
+    needs: test
     runs-on: ubuntu-latest
+    if: ${{ success() }}
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - run: npm install
-      - run: npm test
+    - name: Checkout code
+      uses: actions/checkout@v2
+        
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
+      
+    - name: Deploy to Server
+      run: |
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -p 2221 -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{secrets.SERVER_HOST}} << EOF
+            cd var/lab1
+            git config --global credential.helper store
+            echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" > ~/.git-credentials
+            git pull origin main
+          EOF
