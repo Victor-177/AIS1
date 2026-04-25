@@ -22,7 +22,7 @@ jobs:
 
       - name: Запустить тесты
         run: npm test
-deploy:
+  deploy:
     needs: test
     runs-on: ubuntu-latest
     if: ${{ success() }}
