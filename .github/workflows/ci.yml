@@ -39,7 +39,6 @@ jobs:
           sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{secrets.SERVER_HOST}} << EOF
             cd var/lab1/AIS1
             git config --global credential.helper store
-            git config --global --add safe.directory '*'
             echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" > ~/.git-credentials
             git pull origin main
           EOF
